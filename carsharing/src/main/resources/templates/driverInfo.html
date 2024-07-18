@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Carsharing App</title>
+    <style>
+        h1 {
+            text-align: center;
+            color: white;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 10px 0;
+        }
+
+        .profile-container {
+            text-align: center;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .avatar-container {
+            margin: 20px auto;
+        }
+
+        .avatar-image {
+            width: 150px;
+            height: auto;
+            border: 3px solid #333;
+        }
+
+        .user-info {
+            background-color: #FFF;
+            border: 1px solid #333;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .action-button {
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            margin: 10px 0;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        .my-drives {
+            background-color: #333;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="app-container">
+    <div class="top">
+        <div class="header-center">
+            <h1><a href="/" class="header-link">CARSHARING APP</a></h1>
+        </div>
+    </div>
+    <header class="app-header">
+        <div class="search-container"></div>
+    </header>
+
+    <div class="profile-container">
+        <h2>Driver Info</h2>
+        <div class="user-info">
+            <h3 th:text="${driver.email}"></h3>
+            <p th:text="${driver.name}"></p>
+            <p th:text="${driver.telephone}"></p>
+            <p th:text="${driver.creationDate}"></p>
+            <p th:text="${driver.active}"></p>
+            <!--      <div th:src ="${driver.avatar}"></div>-->
+        </div>
+        <div th:if="${driver.role == 'user'}">
+            <button class="action-button my-drives"><a th:href="@{/rentHistory}">Driver rents</a></button>
+        </div>
+        <form th:action="@{'/drivers/delete/'+${driver.id}}" method="post">
+            <button type="submit" class="action-button quit-account">BAN USER</button>
+        </form>
+    </div>
+
+    <footer class="bottom">
+        <div class="app-footer">
+        </div>
+        <div class="app-footerer">
+            <p>&copy; 2023 Carsharing App. All rights reserved.</p>
+            <p>Contact us: <a href="mailto:support@carsharingapp.com">support@carsharingapp.com</a></p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

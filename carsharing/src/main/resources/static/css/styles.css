@@ -1,0 +1,122 @@
+.top {
+    background-color: #333333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header{
+    position: fixed;
+    width: 100%;
+}
+
+.header-center {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.app-header {
+    background-color: #FFCC00;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    text-align: center;
+    top: 0;
+}
+
+.header-link {
+    text-decoration: none;
+    color: white;
+}
+
+a {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+.profile {
+    text-decoration: none;
+    color: white;
+    padding-right: 30px;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+/*MIDDLE*/
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    min-height: 100%;
+}
+
+.container {
+    flex-grow: 1; /* Grow to fill remaining space */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds container height */
+    overflow-x: auto;
+    padding-bottom: 100px;
+    padding-top: 160px;/* Ensure space for the footer */
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 120vh;
+}
+
+/*BOTTOM*/
+.bottom {
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+    left: 0;
+}
+
+.app-footerer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.8em;
+}
+
+.app-footerer a {
+    color: #FFCC00;
+    text-decoration: none;
+}
+
+.app-footerer a:hover {
+    text-decoration: underline;
+}
+
+.app-footer {
+    background-color: #FFCC00;
+    box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footer-button {
+    background-color: #FFCC00;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #333;
+}
+
+.footer-button:active,
+.footer-button:focus {
+    outline: none;
+}
+
+.footer-button:hover {
+    cursor: pointer;
+    opacity: 0.9;
+}

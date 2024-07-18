@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carsharing App</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <style>
+
+        /*TOP*/
+        .top {
+            background-color: #333333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-center {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .app-header {
+            background-color: #FFCC00;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            text-align: center;
+            top: 0;
+        }
+
+        .header-link {
+            text-decoration: none;
+            color: white;
+        }
+
+        a {
+            text-decoration: none !important;
+            color: inherit;
+        }
+
+        .profile{
+            text-decoration: none;
+            color: white;
+            padding-right: 30px;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .search-container button {
+            padding: 5px 10px;
+            margin-left: 5px;
+            background-color: #FFCC00;
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+            border: 2px solid #333333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            opacity: 0.9;
+        }
+
+        /*MIDDLE*/
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .app-footerer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8em;
+        }
+
+        .app-footerer a {
+            color: #FFCC00;
+            text-decoration: none;
+        }
+
+        .app-footerer a:hover {
+            text-decoration: underline;
+        }
+
+        .app-footer {
+            background-color: #FFCC00;
+            box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .footer-button {
+            background-color: #FFCC00;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .footer-button:active,
+        .footer-button:focus {
+            outline: none;
+        }
+
+        .footer-button:hover {
+            cursor: pointer;
+            opacity: 0.9;
+        }
+
+        /*SPECIFIC*/
+        .map-container {
+            flex-grow: 1;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img {
+            width: 90%;
+            align-content: center;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+<div class="app-container">
+    <div class="top">
+        <div class="header-center">
+            <h1><a th:href="@{'/'}" class="header-link">CARSHARING APP</a></h1>
+        </div>
+        <a class="profile" th:href="@{/drivers/profile}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+            </svg>
+        </a>
+    </div>
+
+    <header class="app-header">
+        <div class="search-container">
+            <button><a th:href="@{'/cars'}">Available Cars</a></button>
+        </div>
+    </header>
+    <div class="map-container" id="map"></div>
+
+        <footer class="app-footer">
+            <button class="footer-button"><a th:href="@{'/rents/current'}">RENT >>></a></button>
+        </footer>
+        <footer class="app-footerer">
+            <p>&copy; 2023 Carsharing App. All rights reserved.</p>
+            <p>Contact us: <a href="mailto:support@carsharingapp.com">support@carsharingapp.com</a></p>
+        </footer>
+    </div>
+<script>
+    document.getElementById('searchBtn').addEventListener('click', function() {
+        // Implement search functionality here
+    });
+
+    document.getElementById('rentBtn').addEventListener('click', function() {
+        // Implement rent functionality here
+        alert('Go to rent page!');
+    });
+</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin="">
+
+</script>
+<script>
+    // Инициализация карты
+    var map = L.map('map').setView([50.00837319801461, 36.26526718060084], 13); // Установите начальные координаты и масштаб
+
+    // Добавление слоя OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Добавление маркера
+    L.marker([49.99027708929613, 36.28940280321823]).addTo(map)
+        .bindPopup('Французський Бульвар').openPopup();
+    L.marker([49.97421951906027, 36.29831747360842]).addTo(map)
+        .bindPopup('Турбоатом').openPopup();
+    L.marker([50.00103087950983, 36.30395029622853]).addTo(map)
+        .bindPopup('Ак. Барабашова').openPopup();
+    L.marker([50.02777595845593, 36.328835185808806]).addTo(map)
+        .bindPopup('ТРЦ Дафі').openPopup();
+    L.marker([50.00417065930909, 36.2448927732589]).addTo(map)
+        .bindPopup('вул. Пушкінська').openPopup();
+    L.marker([49.99114969257762, 36.204552349225104]).addTo(map)
+        .bindPopup('Південний вокзал').openPopup();
+    L.marker([50.011672665278745, 36.22875660315053]).addTo(map)
+        .bindPopup('вул. Наукова').openPopup();
+    L.marker([50.02639885923627, 36.22383411876493]).addTo(map)
+        .bindPopup('Саржин яр').openPopup();
+    L.marker([50.00377064063775, 36.23465358799909]).addTo(map)
+        .bindPopup('Університет').openPopup();
+    L.marker([49.992944682074445, 36.23087698081358]).addTo(map)
+        .bindPopup('Майдан Конституції').openPopup();
+    L.marker([49.98298901731624, 36.234748752706075]).addTo(map)
+        .bindPopup('Набережна').openPopup();
+    L.marker([49.99559995045816, 36.256711083964255]).addTo(map)
+        .bindPopup('р. Харків').openPopup();
+    L.marker([49.920472494965615, 36.279079629624654]).addTo(map)
+        .bindPopup('Міжнародний аеропорт Харків').openPopup();
+
+</script>
+</body>
+</html>

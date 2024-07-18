@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carsharing App</title>
+    <style>
+        h1 {
+            color: white;
+            margin: 0;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .search-container input[type="search"] {
+            padding: 5px;
+            width: 70%;
+            margin-right: 5px;
+        }
+
+        .search-container input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-container input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        .car-list {
+            background-color: white;
+            border-bottom: 1px solid lightgrey;
+            padding: 10px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .car-list h2 {
+            color: #333;
+            margin-bottom: 5px;
+            text-decoration: none;
+        }
+
+        .car-list p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .image {
+            width: 40%;
+            max-width: 200px;
+            margin-right: 20px;
+        }
+
+        .data {
+            display: flex;
+            align-items: center;
+        }
+
+        .but {
+            background-color: #FFCC00;
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+            border: 1px solid #333333;
+            padding: 5px 10px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .but:hover {
+            background-color: #FFDD33;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="app-container">
+    <header>
+        <div class="top">
+            <div class="header-center">
+                <h1><a th:href="@{'/'}" class="header-link">CARSHARING APP</a></h1>
+            </div>
+            <a class="profile" th:href="@{/drivers/profile}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                </svg>
+            </a>
+        </div>
+        <div class="app-header">
+            <div class="search-container">
+                <form method="get" action="/drivers">
+                    <input type="search" placeholder="Search:" id="search" name="email">
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div th:each="driver : ${drivers}" th:if="${driver.role == 'user'}" class="car-list">
+            <div>
+                <a th:href="@{'/drivers/'+ ${driver.id}}"><h2 th:text="${driver.email}"></h2></a>
+                <div class="data">
+                    <p>Name: </p>
+                    <p th:text="${driver.name}"></p>
+                </div>
+                <div class="data">
+                    <p>Date of registration: </p>
+                    <p th:text="${driver.creationDate}"></p>
+                </div>
+                <div class="data">
+                    <p>Telephone number: </p>
+                    <p th:text="${driver.telephone}"></p>
+                </div>
+                <form th:action="@{'/drivers/delete/'+${driver.id}}" method="post">
+                    <button type="submit" class="but">BAN USER</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="bottom">
+        <div class="app-footer">
+        </div>
+        <div class="app-footerer">
+            <p>&copy; 2023 Carsharing App. All rights reserved.</p>
+            <p>Contact us: <a href="mailto:support@carsharingapp.com">support@carsharingapp.com</a></p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carsharing App</title>
+    <style>
+         h1 {
+            color: white;
+            margin: 0;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .search-container input[type="search"] {
+            padding: 5px;
+            width: 70%;
+        }
+
+        .search-container input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-container input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        .search-container button {
+            background-color: #FFCC00;
+            font-size: 1em;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+        }
+
+        .search-container button:hover {
+            opacity: 0.9;
+        }
+
+        .car-list {
+            background-color: white;
+            border-bottom: 1px solid lightgrey;
+            padding: 10px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .car-list h2 {
+            color: #333;
+            margin-bottom: 5px;
+            text-decoration: none;
+        }
+
+        .car-list p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .image {
+            width: 40%;
+            max-width: 200px;
+            margin-right: 20px;
+        }
+
+        .data {
+            display: flex;
+            align-items: center;
+        }
+
+        .but {
+            background-color: #FFCC00;
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+            border: 1px solid #333333;
+            padding: 5px 10px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .but:hover {
+            background-color: #FFDD33;
+        }
+
+        .space{
+            padding: 10px;
+        }
+
+        /* Dropdown styling */
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #FFCC00;
+            box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+        }
+
+        select option {
+            padding: 10px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        select option:hover {
+            background-color: #FFCC00;
+            color: #fff;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var addressSelect = document.getElementById("address");
+            var selectedAddress = document.getElementById("selectedAddress");
+
+            addressSelect.addEventListener("change", function() {
+                var selectedOption = addressSelect.options[addressSelect.selectedIndex];
+                selectedAddress.textContent = selectedOption.textContent;
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="app-container">
+    <header>
+    <div class="top">
+        <div class="header-center">
+            <h1><a th:href="@{'/'}" class="header-link">CARSHARING APP</a></h1>
+        </div>
+        <a class="profile" th:href="@{/drivers/profile}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+            </svg>
+        </a>
+    </div>
+    <div class="app-header">
+        <div class="search-container">
+            <form method="get" action="/cars">
+                <input type="search" placeholder="Search by model:" id="search" name="model">
+                <button type="submit" class="svg-but">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="svg-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+        <div class="search-container">
+            <form id="filterForm" method="GET" action="/cars">
+                <select name="address" id="address" onchange="document.getElementById('filterForm').submit();">
+                    <option th:value="null" th:selected="${param.address == null}">All addresses</option>
+                    <option th:each="parking : ${parkings}"
+                            th:value="${parking.id}"
+                            th:text="${parking.address}"
+                            th:selected="${param.address!=null && parking.id.toString().equals(param.address.toString())}"
+                    ></option>
+                </select>
+            </form>
+            <div class="space"></div>
+            <form id="clasFilterForm" method="GET" action="/cars">
+                <select name="clas" id="clas" onchange="document.getElementById('clasFilterForm').submit();">
+                    <option value="" th:selected="${param.clas == null}">All classes</option>
+                    <option th:each="clas : ${uniqueClasses}"
+                            th:value="${clas}"
+                            th:text="${clas}"
+                            th:selected="${param.clas != null && clas.toString().equals(param.clas.toString())}"
+                    ></option>
+                </select>
+            </form>
+        </div>
+    </div>
+    </header>
+    <div class="container">
+        <div th:each="car : ${cars}" th:if="${car.isAvailable}" class="car-list">
+            <img th:src="${car.image}" alt="Car Image" class="image">
+            <div>
+                <a th:href="@{'/cars/'+ ${car.id}}"><h2 th:text="${car.brand} + ' ' + ${car.model}"></h2></a>
+                <div class="data">
+                    <p th:text="${car.year}"></p>
+                    <button class="but">
+                        <a th:href="@{'/rents/new?carId=' + ${car.id}}">Rent</a>
+                    </button>
+                </div>
+
+                <div class="data">
+                    <p>Class: </p>
+                    <p th:text="${car.clas}"></p>
+                </div>
+                <div class="data">
+                    <p>Registration number: </p>
+                    <p th:text="${car.regNum}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="data">
+        <br><br><br>
+    </div>
+    <footer class="bottom">
+        <div class="app-footer">
+            <button class="footer-button"><a th:href="@{'/rents'}">RENT >>></a></button>
+        </div>
+        <div class="app-footerer">
+            <p>&copy; 2023 Carsharing App. All rights reserved.</p>
+            <p>Contact us: <a href="mailto:support@carsharingapp.com">support@carsharingapp.com</a></p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

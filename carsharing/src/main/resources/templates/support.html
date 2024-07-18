@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support - Carsharing App</title>
+  <style>
+
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      width: 60%;
+      align-content: center;
+    }
+
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+    .app-header {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+  .support-container {
+    padding: 20px;
+    text-align: center;
+    background-color: #FFCC00;
+  }
+
+  .support-container label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  textarea {
+    width: 90%;
+    margin-bottom: 10px;
+    padding: 10px;
+    resize: vertical; /* Allows the user to resize the textarea vertically */
+  }
+
+  .send-button {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .replies-container {
+    background-color: #FFF;
+    padding: 10px;
+    height: 150px; /* Adjust as needed */
+    overflow-y: auto; /* Allows scrolling */
+    margin-bottom: 20px;
+  }
+
+  .app-footerer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.8em;
+  }
+
+  .app-footerer a {
+    color: #FFCC00;
+    text-decoration: none;
+  }
+
+  .app-footerer a:hover {
+    text-decoration: underline;
+  }
+
+  .app-footer {
+    background-color: #FFCC00;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .footer-content {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .footer-button {
+    background-color: #FFCC00;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .footer-button:active,
+  .footer-button:focus {
+    outline: none;
+    /* Removes the default focus outline */
+  }
+
+  /* Optional: if you want to handle the hover state */
+  .footer-button:hover {
+    cursor: pointer;
+    opacity: 0.9;
+    /* Slight transparency on hover for a visual effect */
+  }
+
+  /* Adjust the footer if necessary */
+  @media screen and (min-height: 800px) {
+    .app-footer {
+      position: static;
+    }
+  }</style>
+  <script>document.querySelector('.send-button').addEventListener('click', function() {
+    var question = document.getElementById('question').value;
+    // Here you would handle sending the question to your support system and displaying replies
+    alert('Your question has been sent: ' + question);
+    document.getElementById('question').value = ''; // Clear the textarea after sending
+  });
+  </script>
+</head>
+<body>
+<div class="app-container">
+  <div class="app-header">
+    <h1>CARSHARING APP</h1>
+  </div>
+  <div class="support-container">
+    <label for="question">Enter your question:</label>
+    <textarea id="question" rows="4"></textarea>
+    <button class="send-button">Send</button>
+
+    <h2>Replies:</h2>
+    <div class="replies-container">
+      <!-- Replies will be inserted here -->
+    </div>
+  </div>
+  <footer class="app-footer">
+  </footer>
+  <footer class="app-footerer">
+    <p>&copy; 2023 Carsharing App. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:support@carsharingapp.com">support@carsharingapp.com</a>
+    </p>
+  </footer>
+</div>
+</body>
+</html>

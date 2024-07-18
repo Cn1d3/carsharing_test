@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carsharing App</title>
+    <style>
+        .container {
+            padding-top: 130px !important;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .car-details {
+            margin: auto;
+            padding-left: 30px;
+        }
+
+        .image {
+            height: auto;
+            margin: auto;
+            width: 400px;
+        }
+
+        .image-list {
+            max-width: 100%;
+            margin: 0 auto;
+            flex-grow: 0;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-list img {
+            display: none;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .image-list img.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .nav-button.prev {
+            left: 10px;
+        }
+
+        .nav-button.next {
+            right: 10px;
+        }
+
+        .data {
+            display: flex;
+        }
+
+        .dota {
+            display: flex;
+            justify-content: center;
+        }
+
+        .specs {
+            color: #666666;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="app-container">
+    <header>
+        <div class="top">
+            <div class="header-center">
+                <h1><a href="/" class="header-link">CARSHARING APP</a></h1>
+            </div>
+            <a class="profile" href="/drivers/profile">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                </svg>
+            </a>
+        </div>
+        <div class="app-header">
+            <div class="search-container">
+            </div>
+        </div>
+    </header>
+    <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <div class="container">
+        <div class="image-list">
+            <button class="nav-button prev" onclick="prevImage()">&#10094;</button>
+            <button class="nav-button next" onclick="nextImage()">&#10095;</button>
+            <img th:each="image, iterStat : ${car.imageList}" th:classappend="${iterStat.index == 0} ? 'active'" th:src="'/images/' + ${image.id}" alt="Car Image" class="image">
+        </div>
+        <div class="car-details">
+            <h2 class="dota" th:text="${car.brand} + ' ' + ${car.model} + ' ' + ${car.year}"></h2>
+            <div class="dota">
+                <h4 th:if="${car.isAvailable}" th:text="' Available now on parking: ' + ${car.getParkingOfCar().getAddress()}"></h4>
+                <h4 class="specs" th:unless="${car.isAvailable}" th:text="' Unavailable now'"></h4>
+            </div>
+            <div class="data">
+                <h4>Registration number: </h4>
+                <h4 class="specs" th:text="${car.regNum}"></h4>
+            </div>
+            <div class="data">
+                <h4>Class: </h4>
+                <h4 class="specs" th:text="${car.clas}"></h4>
+            </div>
+            <div class="data">
+                <h4>Cost per minute: </h4>
+                <h4 class="specs" th:text="${car.costForMinute} + ' grn/min' "></h4>
+            </div>
+        </div>
+    </div>
+    <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <footer class="bottom">
+        <div class="app-footer">
+            <button class="footer-button"><a th:href="@{'/rents/new?carId=' + ${car.id}}">RENT >>></a></button>
+        </div>
+        <div class="app-footerer">
+            <p>&copy; 2023 Carsharing App. All rights reserved.</p>
+            <p>Contact us: <a href="mailto:support@carsharingapp.com">support@carsharingapp.com</a></p>
+        </div>
+    </footer>
+</div>
+
+<script>
+    let currentIndex = 0;
+    const images = document.querySelectorAll('.image-list .image');
+
+    function showImage(index) {
+        images.forEach((img, i) => {
+            img.classList.remove('active');
+            if (i === index) {
+                img.classList.add('active');
+            }
+        });
+    }
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+    }
+
+    function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        showImage(currentIndex);
+    });
+</script>
+</body>
+</html>

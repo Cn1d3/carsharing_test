@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carsharing App</title>
+  <style>
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .data{
+      display: flex;
+      justify-content: center;
+      margin-left: 20px;
+      margin-bottom: 15px;
+      flex-direction: column;
+      width: 50%;
+    }
+
+    .specs{
+      color: #666666;
+    }
+
+    .specs input[type="text"],
+    .specs input[type="number"],
+    .specs input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .specs input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    .specs label {
+      margin-right: 20px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      background-color: #FFCC00;
+      color: #333;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      opacity: 0.9;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    h3 {
+      margin-bottom: 5px;
+    }
+  </style>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="app-container">
+  <header>
+  <div class="top">
+    <div class="header-center">
+      <h1><a href="/" class="header-link">CARSHARING APP</a></h1>
+    </div>
+    <a class="profile" href="/drivers/profile">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+      </svg>
+    </a>
+  </div>
+  <div class="app-header">
+    <div class="search-container">
+    </div>
+  </div>
+  </header>
+  <div class="container">
+    <h1>Adding a car</h1>
+    <div class="data">
+      <form method="post" action="/cars/new" enctype="multipart/form-data">
+        <div class="specs">
+          <h3>Brand</h3><input type="text" name="brand">
+        </div>
+        <div class="specs">
+          <h3>Model</h3><input type="text" name="model">
+        </div>
+        <div class="specs">
+          <h3>Class</h3><input type="text" name="clas">
+        </div>
+        <div class="specs">
+          <h3>Cost per minute</h3><input type="number" name="costForMinute">
+        </div>
+        <div class="specs">
+          <h3>Parking Id</h3><input type="number" name="parkingId">
+        </div>
+        <div class="specs">
+          <h3>Image</h3><input type="text" name="image">
+        </div>
+        <div class="specs">
+          <h3>Year</h3><input type="number" name="year">
+        </div>
+        <div class="specs">
+          <h3>Reg Num</h3><input type="text" name="regNum">
+        </div>
+        <div class="specs">
+          <h3>Available</h3>
+          <label>
+            <input type="radio" name="isAvailable" value="true"> True
+          </label>
+          <label>
+            <input type="radio" name="isAvailable" value="false"> False
+          </label>
+        </div>
+        <div class="specs">
+          <h3>Images</h3>
+          <input type="file" name="file1">
+          <input type="file" name="file2">
+          <input type="file" name="file3">
+        </div>
+        <button type="submit">Add car</button>
+      </form>
+    </div>
+  </div>
+  <footer class="bottom">
+    <div class="app-footer">
+    </div>
+    <div class="app-footerer">
+      <p>&copy; 2023 Carsharing App. All rights reserved.</p>
+      <p>Contact us: <a href="mailto:support@carsharingapp.com">support@carsharingapp.com</a></p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

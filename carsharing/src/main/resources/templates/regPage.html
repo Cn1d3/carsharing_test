@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - Carsharing App</title>
+    <style>
+        /*TOP*/
+        .top {
+            background-color: #333333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-center {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .app-header {
+            background-color: #FFCC00;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            text-align: center;
+            top: 0;
+        }
+
+        .header-link {
+            text-decoration: none;
+            color: white;
+        }
+
+        a {
+            text-decoration: none !important;
+            color: inherit;
+        }
+
+        .profile{
+            text-decoration: none;
+            color: white;
+            padding-right: 30px;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .search-container button {
+            padding: 5px 10px;
+            margin-left: 5px;
+            background-color: #FFCC00;
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+            border: 2px solid #333333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            opacity: 0.9;
+        }
+
+        /*MIDDLE*/
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /*BOTTOM*/
+        .bottom{
+            bottom: 0;
+            width: 100%;
+            position: fixed;
+            left: 0;
+        }
+
+        .app-footerer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8em;
+        }
+
+        .app-footerer a {
+            color: #FFCC00;
+            text-decoration: none;
+        }
+
+        .app-footerer a:hover {
+            text-decoration: underline;
+        }
+
+        .app-footer {
+            background-color: #FFCC00;
+            box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .footer-button {
+            background-color: #FFCC00;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .footer-button:active,
+        .footer-button:focus {
+            outline: none;
+        }
+
+        .footer-button:hover {
+            cursor: pointer;
+            opacity: 0.9;
+        }
+
+        /*SPECIFIC*/
+
+        h1 {
+            text-align: center;
+            color: white;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 10px 0;
+        }
+
+        .registration-container {
+            display: flex;
+            background-color: #FFCC00;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .avatar-button-wrapper {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+            margin-left: 40%;
+        }
+
+        .avatar-button {
+            opacity: 0;
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .avatar-button-label {
+            background: grey;
+            border-radius: 50%;
+            border: 1px solid #333333;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            top: 0;
+        }
+
+        .registration-form {
+            width: 60%;
+            max-width: 400px; /* Adjust as needed */
+        }
+
+        .registration-form label {
+            margin: 10px 0;
+        }
+
+        .registration-form input[type="text"],
+        .registration-form input[type="tel"],
+        .registration-form input[type="number"],
+        .registration-form input[type="email"],
+        .registration-form input[type="password"] {
+            height: 30px;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .gender-input {
+            display: flex;
+            justify-content: start;
+        }
+
+        .gender-input input[type="radio"] {
+            margin: 0 3px 0 10px;
+        }
+
+        .submit-button {
+            background-color: #333;
+            color: white;
+            padding: 10px 10px;
+            border: none;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .bottom{
+            width: 100%;
+            bottom: 0;
+            position: fixed;
+        }
+
+        .message {
+            display: none;
+            position: absolute;
+            top: 75px; /* Adjust based on header height */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            color: black;
+            background-color: #333;
+            border-radius: 7px;
+            z-index: 1000;
+        }
+
+        .message.error {
+            background-color: #FF6347;
+        }
+
+        .message.success {
+            background-color: #32CD32;
+        }
+    </style>
+    <script>
+        function showMessage(type) {
+            var messageElement = document.getElementById(type + '-message');
+            if (messageElement) {
+                messageElement.style.display = 'block';
+                setTimeout(function() {
+                    messageElement.style.display = 'none';
+                }, 3000); // Message disappears after 3 seconds
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if (new URLSearchParams(window.location.search).has('error')) {
+                showMessage('error');
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="app-container">
+    <header class="top">
+        <div class="header-center">
+            <h1><a href="/" class="header-link">CARSHARING APP</a></h1>
+        </div>
+    </header>
+    <div id="error-message" class="message error">
+        User already exists
+    </div>
+    <div class="registration-container">
+        <form action="/registration" method="post" class="registration-form" enctype="multipart/form-data">
+            <div class="avatar-button-wrapper">
+                <input type="file" name="file1" class="avatar-button" id="avatar">
+                <label for="avatar" class="avatar-button-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                    </svg>
+                </label>
+            </div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="telephone">Telephone:</label>
+            <input type="tel" id="telephone" name="telephone" required>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="gender">Gender:</label>
+            <div id="gender" class="gender-input">
+                <input type="radio" id="male" name="gender" value="M" required>
+                <label for="male">M</label>
+                <input type="radio" id="female" name="gender" value="F" required>
+                <label for="female">F</label>
+            </div>
+
+            <label for="email">Mail:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirm-password">Confirm:</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+
+            <button type="submit" class="submit-button">Register</button>
+        </form>
+    </div>
+
+    <div class="bottom">
+        <footer class="app-footer">
+        </footer>
+        <footer class="app-footerer">
+            <p>&copy; 2023 Carsharing App. All rights reserved.</p>
+            <p>Contact us: <a href="mailto:support@carsharingapp.com">support@carsharingapp.com</a></p>
+        </footer>
+    </div>
+</div>
+</body>
+</html>

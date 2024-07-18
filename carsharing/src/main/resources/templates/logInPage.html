@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - Carsharing App</title>
+    <style>
+        .registration-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: auto;
+            background-color: #FFCC00;
+            flex-grow: 1;
+            align-content: center;
+            padding: 20px;
+        }
+
+        .registration-form {
+            width: 60%;
+            margin-top: 20px;
+        }
+
+        .registration-form input[type="text"],
+        .registration-form input[type="tel"],
+        .registration-form input[type="number"],
+        .registration-form input[type="email"],
+        .registration-form input[type="password"] {
+            height: 30px;
+            width: 100%;
+            margin-top: 10px;
+            padding-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .gender-input input[type="radio"] {
+            margin: 0 5px 0 0;
+        }
+
+        .submit-button {
+            margin: 0 auto;
+            width: 150px;
+            background-color: #333;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            margin-top: 10px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            justify-content: space-between;
+            display: inline-block;
+        }
+
+        .login-button {
+            margin: 0 20%;
+            background-color: #333;
+            min-width: 150px;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            margin-top: 10px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            justify-content: space-between;
+            display: inline-block;
+        }
+
+        .login-div {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .submit-button:hover {
+            background-color: #555;
+        }
+
+        .message {
+            display: none;
+            position: absolute;
+            top: 75px; /* Adjust based on header height */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            color: black;
+            background-color: #333;
+            border-radius: 7px;
+            /*border: 1px solid #333;*/
+            z-index: 1000;
+        }
+
+        .message.error {
+            background-color: #FF6347;
+        }
+
+        .message.logout {
+            background-color: #FF6347;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script>
+        function showMessage(type) {
+            var messageElement = document.getElementById(type + '-message');
+            if (messageElement) {
+                messageElement.style.display = 'block';
+                setTimeout(function() {
+                    messageElement.style.display = 'none';
+                }, 3000); // Сообщение исчезает через 3 секунды
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if (new URLSearchParams(window.location.search).has('error')) {
+                showMessage('error');
+            }
+            if (new URLSearchParams(window.location.search).has('logout')) {
+                showMessage('logout');
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="app-container">
+    <div class="top">
+        <div class="header-center">
+            <h1><a href="/" class="header-link">CARSHARING APP</a></h1>
+        </div>
+    </div>
+    <div id="error-message" class="message error">
+        Invalid username or password.
+    </div>
+    <div id="logout-message" class="message logout">
+        You have been logged out.
+    </div>
+    <div class="registration-container">
+        <form action="/login" method="post" class="registration-form">
+            <label for="email">Mail:</label>
+            <input type="email" id="email" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <div class="login-div">
+                <button type="submit" class="login-button">LOG IN</button>
+            </div>
+            <br>
+        </form>
+        <button type="submit" class="submit-button"><a th:href="@{'/registration'}">REGISTER</a></button>
+        <br>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="submit-button">SIGN OUT</button>
+        </form>
+    </div>
+
+    <footer class="bottom">
+        <div class="app-footer">
+        </div>
+        <div class="app-footerer">
+            <p>&copy; 2023 Carsharing App. All rights reserved.</p>
+            <p>Contact us: <a href="mailto:support@carsharingapp.com">support@carsharingapp.com</a></p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
